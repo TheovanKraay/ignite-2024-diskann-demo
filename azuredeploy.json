@@ -33,18 +33,23 @@
               "value": "[parameters('packageUrl')]"
             },
             {
-              "name": "STARTUP_COMMAND",
-              "value": "/home/site/wwwroot/startup.sh"
-            },
-            {
               "name": "AZURE_COSMOSDB_ENDPOINT",
               "value": "[parameters('cosmosDbEndpoint')]"
             },
             {
               "name": "AZURE_COSMOSDB_KEY",
               "value": "[parameters('cosmosDbKey')]"
+            },
+            {
+              "name": "AZURE_OPENAI_ENDPOINT",
+              "value": "[parameters('azureOpenAiEndpoint')]"
+            },
+            {
+              "name": "AZURE_OPENAI_APIKEY",
+              "value": "[parameters('azureOpenAiApiKey')]"
             }
-          ]
+          ],
+          "startupCommand": "/home/site/wwwroot/startup.sh"
         }
       }
     }
@@ -80,6 +85,18 @@
       "defaultValue": "https://cosmosdbcosmicworks.blob.core.windows.net/theo/ignite-2024-diskann-demo.zip",
       "metadata": {
         "description": "URL of the zip package containing the application files"
+      }
+    },
+    "azureOpenAiEndpoint": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure OpenAI Endpoint"
+      }
+    },
+    "azureOpenAiApiKey": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Azure OpenAI API Key"
       }
     }
   }
