@@ -48,8 +48,7 @@
               "name": "AZURE_OPENAI_APIKEY",
               "value": "[parameters('azureOpenAiApiKey')]"
             }
-          ],
-          "startupCommand": "/home/site/wwwroot/startup.sh"
+          ]
         }
       }
     }
