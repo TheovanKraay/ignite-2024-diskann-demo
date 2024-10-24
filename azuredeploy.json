@@ -30,7 +30,7 @@
           "appSettings": [
             {
               "name": "WEBSITE_RUN_FROM_PACKAGE",
-              "value": "1"
+              "value": "[parameters('packageUrl')]"
             },
             {
               "name": "STARTUP_COMMAND",
@@ -46,19 +46,6 @@
             }
           ]
         }
-      }
-    },
-    {
-      "type": "Microsoft.Web/sites/sourcecontrols",
-      "apiVersion": "2021-02-01",
-      "name": "[concat(parameters('appNameBase'), '-', uniqueString(resourceGroup().id), '/web')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', concat(parameters('appNameBase'), '-', uniqueString(resourceGroup().id)))]"
-      ],
-      "properties": {
-        "repoUrl": "https://github.com/TheovanKraay/ignite-2024-diskann-demo",
-        "branch": "main",
-        "isManualIntegration": false
       }
     }
   ],
@@ -86,6 +73,13 @@
       "type": "securestring",
       "metadata": {
         "description": "Azure Cosmos DB Key"
+      }
+    },
+    "packageUrl": {
+      "type": "string",
+      "defaultValue": "https://cosmosdbcosmicworks.blob.core.windows.net/theo/ignite-2024-diskann-demo.zip",
+      "metadata": {
+        "description": "URL of the zip package containing the application files"
       }
     }
   }
