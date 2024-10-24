@@ -25,6 +25,6 @@ This repository contains a Streamlit application that allows users to search for
    ```sh
    git clone https://github.com/TheovanKraay/ai-search-demo.git
    ```
-   
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/TheovanKraay/ignite-2024-diskann-demo/refs/heads/main/azuredeploy.json)
+
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FTheovanKraay%2Fignite-2024-diskann-demo%2Frefs%2Fheads%2Fmain%2Fazuredeploy.json%2F)
    
