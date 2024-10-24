@@ -3,10 +3,26 @@
   "contentVersion": "1.0.0.0",
   "resources": [
     {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2021-02-01",
+      "name": "[parameters('appServicePlanName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "B1",
+        "tier": "Basic"
+      },
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2021-02-01",
       "name": "[parameters('appName')]",
       "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+      ],
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
         "siteConfig": {
@@ -33,22 +49,12 @@
       }
     },
     {
-      "type": "Microsoft.Web/serverfarms",
-      "apiVersion": "2021-02-01",
-      "name": "[parameters('appServicePlanName')]",
-      "location": "[resourceGroup().location]",
-      "sku": {
-        "name": "B1",
-        "tier": "Basic"
-      },
-      "properties": {
-        "reserved": true
-      }
-    },
-    {
       "type": "Microsoft.Web/sites/sourcecontrols",
       "apiVersion": "2021-02-01",
       "name": "[concat(parameters('appName'), '/web')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', parameters('appName'))]"
+      ],
       "properties": {
         "repoUrl": "https://github.com/TheovanKraay/ignite-2024-diskann-demo",
         "branch": "main",
