@@ -58,14 +58,13 @@
       "properties": {
         "repoUrl": "https://github.com/TheovanKraay/ignite-2024-diskann-demo",
         "branch": "main",
-        "isManualIntegration": true
+        "isManualIntegration": false
       }
     }
   ],
   "parameters": {
     "appNameBase": {
       "type": "string",
-      "defaultValue": "my-streamlit-app",
       "metadata": {
         "description": "Base name of the Azure Web App"
       }
