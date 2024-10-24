@@ -18,7 +18,7 @@
     {
       "type": "Microsoft.Web/sites",
       "apiVersion": "2021-02-01",
-      "name": "[parameters('appName')]",
+      "name": "[concat(parameters('appNameBase'), '-', parameters('uniqueIdentifier'))]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
@@ -51,9 +51,9 @@
     {
       "type": "Microsoft.Web/sites/sourcecontrols",
       "apiVersion": "2021-02-01",
-      "name": "[concat(parameters('appName'), '/web')]",
+      "name": "[concat(parameters('appNameBase'), '-', parameters('uniqueIdentifier'), '/web')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', parameters('appName'))]"
+        "[resourceId('Microsoft.Web/sites', concat(parameters('appNameBase'), '-', parameters('uniqueIdentifier')))]"
       ],
       "properties": {
         "repoUrl": "https://github.com/TheovanKraay/ignite-2024-diskann-demo",
@@ -63,11 +63,18 @@
     }
   ],
   "parameters": {
-    "appName": {
+    "appNameBase": {
       "type": "string",
       "defaultValue": "my-streamlit-app",
       "metadata": {
-        "description": "Name of the Azure Web App"
+        "description": "Base name of the Azure Web App"
+      }
+    },
+    "uniqueIdentifier": {
+      "type": "string",
+      "defaultValue": "[uniqueString(resourceGroup().id)]",
+      "metadata": {
+        "description": "Unique identifier for the app name"
       }
     },
     "appServicePlanName": {
