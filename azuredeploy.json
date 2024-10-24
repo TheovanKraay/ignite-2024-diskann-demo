@@ -1,0 +1,87 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2021-02-01",
+      "name": "[parameters('appName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
+        "siteConfig": {
+          "linuxFxVersion": "PYTHON|3.8",
+          "appSettings": [
+            {
+              "name": "WEBSITE_RUN_FROM_PACKAGE",
+              "value": "1"
+            },
+            {
+              "name": "STARTUP_COMMAND",
+              "value": "/home/site/wwwroot/startup.sh"
+            },
+            {
+              "name": "AZURE_COSMOSDB_ENDPOINT",
+              "value": "[parameters('cosmosDbEndpoint')]"
+            },
+            {
+              "name": "AZURE_COSMOSDB_KEY",
+              "value": "[parameters('cosmosDbKey')]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2021-02-01",
+      "name": "[parameters('appServicePlanName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "B1",
+        "tier": "Basic"
+      },
+      "properties": {
+        "reserved": true
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites/sourcecontrols",
+      "apiVersion": "2021-02-01",
+      "name": "[concat(parameters('appName'), '/web')]",
+      "properties": {
+        "repoUrl": "https://github.com/TheovanKraay/ignite-2024-diskann-demo",
+        "branch": "main",
+        "isManualIntegration": true
+      }
+    }
+  ],
+  "parameters": {
+    "appName": {
+      "type": "string",
+      "defaultValue": "my-streamlit-app",
+      "metadata": {
+        "description": "Name of the Azure Web App"
+      }
+    },
+    "appServicePlanName": {
+      "type": "string",
+      "defaultValue": "myAppServicePlan",
+      "metadata": {
+        "description": "Name of the App Service Plan"
+      }
+    },
+    "cosmosDbEndpoint": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure Cosmos DB Endpoint"
+      }
+    },
+    "cosmosDbKey": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Azure Cosmos DB Key"
+      }
+    }
+  }
+}
